@@ -1,0 +1,26 @@
+{
+  "name": "invest-journey",
+  "owner": {
+    "name": "AmbitionC",
+    "url": "https://github.com/AmbitionC"
+  },
+  "metadata": {
+    "description": "Invest Journey A 股市场数据服务：加工读数、历史序列与完整口径。"
+  },
+  "plugins": [
+    {
+      "name": "invest-journey",
+      "source": "./",
+      "description": "把 A 股恐慌指数、宽基长期中枢位置、乖离率、股息率、宏观数据及其口径接进你自己的 Agent（MCP + Skills）。",
+      "version": "0.1.0",
+      "category": "finance",
+      "keywords": [
+        "a-share",
+        "market-data",
+        "quant",
+        "mcp",
+        "chinese"
+      ]
+    }
+  ]
+}
