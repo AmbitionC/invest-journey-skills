@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "invest-journey": {
+      "type": "http",
+      "url": "https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest",
+      "headers": {
+        "Authorization": "Bearer ${INVEST_JOURNEY_API_KEY}"
+      }
+    }
+  }
+}
