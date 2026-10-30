@@ -15,7 +15,7 @@
 
 ## 1. 获取 API Key
 
-目前为内测，Key 由人工发放（格式 `jk_` 开头）。联系作者获取后：
+在 https://www.agent-journey.cn/developer 登录后点「开通」，免费送 100 点体验额度，然后自助创建 Key（格式 `jk_` 开头，只显示一次）。Agent Journey 与 Invest Journey 共用同一个 Key 和点数余额。拿到后：
 
 ```bash
 export INVEST_JOURNEY_API_KEY=jk_你的key
@@ -65,7 +65,21 @@ Cursor / 其他客户端的 `mcp.json`：
 
 ## 工具与计量
 
-完整工具清单见 [docs/tools.md](docs/tools.md)。当前版本只读、不扣点，每个 Key 每日 2000 次调用上限。
+完整工具清单见 [docs/tools.md](docs/tools.md)。当前版本只读。
+
+## 计费
+
+按调用扣点（1 点约 ¥0.1），调用失败自动退点；`account_usage` 可随时查余额。实验阶段体验价，规模起来后恢复原价，已购会员有效期内不受影响。
+
+| 档位 | 价格 | 每月点数 | Key 数 | 每日调用上限 |
+|---|---|---|---|---|
+| 体验 | 免费 | 开通送 100 点 | 1 | 200 |
+| 入门 | ¥19.9/月（原价 ¥29），¥139/年 | 300 | 2 | 1000 |
+| Pro | ¥49/月（原价 ¥79），¥399/年 | 1200 | 5 | 5000 |
+
+加油包：100 点 ¥6.9 · 500 点 ¥29.9 · 1100 点 ¥59，不过期。
+
+每次调用的点数：口径类工具（`indicator_list`、`methodology_get`、`account_usage`）免费；`knowledge_get`、`interview_get`、`market_snapshot`、`fear_series`、`bias_series` 每次 2 点；其余每次 1 点。完整价目以 https://www.agent-journey.cn/developer 为准。
 
 ## 声明
 
