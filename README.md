@@ -80,6 +80,8 @@ Cursor / 其他客户端的 `mcp.json`：
 | 体验 | 免费 | 免费 | 开通送 100 点 | 1 | 200 |
 | 会员 | ¥14.5/月，¥119.5/年 | ¥29/月（一天不到一块钱），¥239/年 | 400 | 2 | 1500 |
 
+会员另含 **知识点 PDF 全套下载**（Agent Journey 知识库按目录整理、随更新，在 https://www.agent-journey.cn/services 领取；公测免费期登录即可领）。此前单独购买过 ¥9.9 PDF 的用户下载资格永久保留。
+
 加油包（不过期）：100 点 ¥5（原价 ¥10）· 500 点 ¥22.5（原价 ¥45）· 1100 点 ¥44（原价 ¥88）。
 
 每次调用的点数（收费阶段起）：口径类工具（`indicator_list`、`methodology_get`、`account_usage`）免费；`knowledge_get`、`interview_get`、`market_snapshot`、`fear_series`、`bias_series` 每次 2 点；其余每次 1 点。完整价目以 https://www.agent-journey.cn/developer 为准。
