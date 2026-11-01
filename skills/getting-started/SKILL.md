@@ -18,7 +18,6 @@ description: Invest Journey 刚装好、第一次使用，或用户问「这个�
    - 现在沪深300 贵不贵？市场情绪怎么样？（约 2 点）
    - 把 2015 年以来的恐慌指数画出来。（约 2 点）
 3. 用户挑了就直接按对应 Skill 去做：`market-reading`（市场读数）、`methodology`（指标口径）、`strategy-builder`（把你的规则写清楚并回测）。
-4. 只在用户问起时再提：同一个 Key 和余额也能用 Agent Journey（前端 / AI 工程知识库、真实面经和实战题卡），装法见 https://www.agent-journey.cn/developer 。
 
 不要一上来就列出全部工具，也不要主动推销会员。
 
@@ -29,7 +28,7 @@ description: Invest Journey 刚装好、第一次使用，或用户问「这个�
 | 报错里写着 | 让用户做 |
 |---|---|
 | 没读到 API Key / 环境变量没有生效 | 在终端运行 `echo $INVEST_JOURNEY_API_KEY`，确认能看到 `jk_` 开头的 Key；没有就 `export INVEST_JOURNEY_API_KEY=jk_你的key` 并写进 `~/.zshrc` 或 `~/.bashrc`，然后**完全退出客户端再打开** |
-| Key 格式不对 / Key 不存在 | 到 https://www.agent-journey.cn/developer 「我的后台」核对 Key 前缀，复制完整（不带引号空格）；明文找不到就新建一个 |
+| Key 格式不对 / Key 不存在 | 到 https://invest-journey.vercel.app/skills 「我的账户」核对 Key 前缀，复制完整（不带引号空格）；明文找不到就新建一个 |
 | Key 已被吊销 | 到后台新建一个，替换环境变量后重启客户端，余额不受影响 |
 | 工具列表里根本没有 `invest-journey` 的工具 | 说明 MCP 没连上：Claude Code 里输入 `/mcp` 看 `invest-journey` 的状态，按上面第一行排查 |
 | Journey 点数不足 | 停止调用，把报错里的余额、充值链接和价格原样告诉用户；充值到账后直接重试，Key 不用换 |

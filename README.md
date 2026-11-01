@@ -15,7 +15,7 @@
 
 ## 1. 获取 API Key
 
-在 https://www.agent-journey.cn/developer 登录后点「开通」，送 50 点体验额度（约够跑通 5~6 次完整场景），然后自助创建 Key（格式 `jk_` 开头，只显示一次）。Agent Journey 与 Invest Journey 共用同一个 Key 和点数余额。拿到后：
+在 https://invest-journey.vercel.app/skills 登录后点「开通」，送 50 点体验额度（约够跑通 5~6 次完整场景），然后自助创建 Key（格式 `jk_` 开头，只显示一次）。拿到后：
 
 ```bash
 export INVEST_JOURNEY_API_KEY=jk_你的key
@@ -61,7 +61,7 @@ Cursor / 其他客户端的 `mcp.json`：
 
 > 我想在沪深300 低于长期中枢且恐慌指数 ≥75 时分批买入，帮我写成规则并检验
 
-第一次用可以直接问「这个能干嘛」，Agent 会告诉你余额和几个可以直接试的问法（`getting-started` Skill，查余额不扣点）。装好后回到 https://www.agent-journey.cn/developer ，页面顶部的进度条会自动检测你的 Agent 有没有连上。
+第一次用可以直接问「这个能干嘛」，Agent 会告诉你余额和几个可以直接试的问法（`getting-started` Skill，查余额不扣点）。装好后回到 https://invest-journey.vercel.app/skills ，页面顶部的进度条会自动检测你的 Agent 有没有连上。
 
 ### 连不上怎么办
 
@@ -90,11 +90,11 @@ Cursor / 其他客户端的 `mcp.json`：
 | 体验 | — | — | 开通送 50 点（一次性） | 1 | 200 |
 | 会员 | ¥14.5/月，¥119.5/年 | ¥29/月（一天不到一块钱），¥239/年 | 400 | 2 | 1500 |
 
-会员另含 **知识点 PDF 全套下载**（Agent Journey 知识库按目录整理、随更新，在 https://www.agent-journey.cn/services 领取；2026-11-30 前登录即可领）。此前单独购买过 ¥9.9 PDF 的用户下载资格永久保留。
+会员是数据服务会员：每月发放点数、更多 Key 和更高的每日上限，点数不过期，没有自动续费；点数不够时买加油包，和会员叠加使用。支持支付宝网页付款（到账自动发放）和微信扫码。
 
 加油包（不过期）：100 点 ¥5（原价 ¥10）· 500 点 ¥22.5（原价 ¥45）· 1100 点 ¥44（原价 ¥88）。
 
-每次调用的点数：口径类工具（`indicator_list`、`methodology_get`、`account_usage`）不扣点；`knowledge_get`、`interview_get`、`market_snapshot`、`fear_series`、`bias_series` 每次 2 点；其余每次 1 点。完整价目以 https://www.agent-journey.cn/developer 为准。
+每次调用的点数：口径类工具（`indicator_list`、`methodology_get`、`account_usage`）不扣点；`market_snapshot`、`fear_series`、`bias_series` 每次 2 点；其余每次 1 点。完整价目以 https://invest-journey.vercel.app/skills 为准。
 
 ## 声明
 
