@@ -12,7 +12,7 @@
       "name": "invest-journey",
       "source": "./",
       "description": "把 A 股恐慌指数、宽基长期中枢位置、乖离率、股息率、宏观数据及其口径接进你自己的 Agent（MCP + Skills）。",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "category": "finance",
       "keywords": [
         "a-share",

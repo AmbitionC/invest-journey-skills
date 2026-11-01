@@ -61,7 +61,18 @@ Cursor / 其他客户端的 `mcp.json`：
 
 > 我想在沪深300 低于长期中枢且恐慌指数 ≥75 时分批买入，帮我写成规则并检验
 
-排查 Key 或网络问题：`./scripts/call.sh tools/list`
+第一次用可以直接问「这个能干嘛」，Agent 会告诉你余额和几个可以直接试的问法（`getting-started` Skill，查余额不扣点）。装好后回到 https://www.agent-journey.cn/developer ，页面顶部的进度条会自动检测你的 Agent 有没有连上。
+
+### 连不上怎么办
+
+| 现象 | 处理 |
+|---|---|
+| 报「没读到 API Key / 环境变量没有生效」 | 终端运行 `echo $INVEST_JOURNEY_API_KEY` 确认有值；改完环境变量要**完全退出客户端再打开** |
+| 报「Key 格式不对 / Key 不存在」 | 到后台核对 Key 前缀，复制完整、不带引号空格；明文找不到就新建 |
+| 报「Key 已被吊销」 | 后台新建一个替换即可，余额不受影响 |
+| Claude Code 里没有 invest-journey 的工具 | 输入 `/mcp` 看 `invest-journey` 状态，按第一行排查 |
+
+不经客户端直接测 Key 和网络：`./scripts/call.sh tools/list`
 
 ## 工具与计量
 
