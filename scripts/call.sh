@@ -20,6 +20,7 @@ fi
 curl -sS -X POST "$URL" \
   -H "Authorization: Bearer $INVEST_JOURNEY_API_KEY" \
   -H 'Content-Type: application/json' \
+  -H 'X-Journey-Client: script/call.sh' \
   -H 'Accept: application/json, text/event-stream' \
   -d "$BODY"
 echo
