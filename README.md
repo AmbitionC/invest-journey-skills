@@ -13,44 +13,41 @@
 
 口径文档静态版见 [methodology/](methodology/README.md)。
 
-## 1. 获取 API Key
+## 1. 安装（一句话）
 
-在 https://invest-journey.vercel.app/skills 登录后点「开通」，送 50 点体验额度（约够跑通 5~6 次完整场景），然后自助创建 Key（格式 `jk_` 开头，只显示一次）。拿到后：
+在 Claude Code 里直接说：
 
-```bash
-export INVEST_JOURNEY_API_KEY=jk_你的key
-```
+> 帮我安装 GitHub 上的 Invest Journey 插件：AmbitionC/invest-journey-skills
 
-## 2. 安装
-
-### Claude Code（推荐，MCP + Skills 一起装）
-
-```text
-/plugin marketplace add AmbitionC/invest-journey-skills
-/plugin install invest-journey@invest-journey
-```
-
-重启 Claude Code，`/mcp` 里看到 `invest-journey` 已连接即可。
-
-### 只接 MCP（任何支持远程 MCP 的客户端）
+或者自己在终端运行：
 
 ```bash
-claude mcp add --transport http invest-journey \
-  https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest \
-  --header "Authorization: Bearer $INVEST_JOURNEY_API_KEY"
+claude plugin marketplace add AmbitionC/invest-journey-skills && claude plugin install invest-journey@invest-journey
 ```
 
-Cursor / 其他客户端的 `mcp.json`：
+（在 Claude Code 里也可以输入 `/plugin marketplace add AmbitionC/invest-journey-skills`，再输入 `/plugin install invest-journey@invest-journey`。）
 
-```json
-{
-  "mcpServers": {
-    "invest-journey": {
-      "url": "https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest",
-      "headers": { "Authorization": "Bearer jk_你的key" }
-    }
-  }
-}
+> 给 Agent 看的安装说明：运行上面那条终端命令即可，不需要 API Key、不需要设置环境变量；装好后提醒用户重启 Claude Code，第一次使用时按下面第 2 步授权。
+
+## 2. 第一次使用：浏览器授权
+
+**不用建 Key，不用写环境变量。** 重启 Claude Code 后输入 `/mcp`，选中 `invest-journey`（显示「needs authentication」），按提示选 **Authenticate**：
+浏览器会打开 Invest Journey，登录（手机号验证码登录会自动注册）后点「授权」，回到 Claude Code 就连上了。新用户授权时自动开通，送 **50 点体验额度**（约够跑通 5~6 次完整场景）。
+
+授权换来的凭证由 Claude Code 自己保存；不想用了，到 https://invest-journey.vercel.app/skills 「我的账户」吊销即可。
+
+### 其他客户端
+
+MCP 地址：`https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest`（Streamable HTTP）
+
+- **只接 MCP 的 Claude Code**：`claude mcp add --transport http --scope user invest-journey https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest`，然后同上 `/mcp` 授权。
+- **Cursor**：`~/.cursor/mcp.json` 里加 `{"mcpServers": {"invest-journey": {"url": "https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest"}}}`，在 MCP 设置页点登录，浏览器里授权。
+- **不支持浏览器授权的客户端（如 Codex）**：到 https://invest-journey.vercel.app/skills 登录后在「我的账户」创建 Key（`jk_` 开头，只显示一次），请求头带上 `Authorization: Bearer jk_你的key`。Codex 的 `~/.codex/config.toml`：
+
+```toml
+[mcp_servers.invest_journey]
+url = "https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest"
+bearer_token_env_var = "INVEST_JOURNEY_API_KEY"
 ```
 
 ## 3. 试一下
@@ -67,12 +64,14 @@ Cursor / 其他客户端的 `mcp.json`：
 
 | 现象 | 处理 |
 |---|---|
-| 报「没读到 API Key / 环境变量没有生效」 | 终端运行 `echo $INVEST_JOURNEY_API_KEY` 确认有值；改完环境变量要**完全退出客户端再打开** |
-| 报「Key 格式不对 / Key 不存在」 | 到后台核对 Key 前缀，复制完整、不带引号空格；明文找不到就新建 |
-| 报「Key 已被吊销」 | 后台新建一个替换即可，余额不受影响 |
-| Claude Code 里没有 invest-journey 的工具 | 输入 `/mcp` 看 `invest-journey` 状态，按第一行排查 |
+| Claude Code 里没有 invest-journey 的工具 | 装完要重启 Claude Code；再输入 `/mcp` 看 `invest-journey` 的状态 |
+| `/mcp` 里显示 needs authentication | 选中它按提示选 Authenticate，在打开的页面登录并点「授权」 |
+| 授权后又提示需要授权 / 报「Key 已被吊销」 | 在 `/mcp` 里重新授权即可，余额不受影响 |
+| 手填 Key 的客户端报「没读到 API Key / Key 不存在」 | 确认请求头是 `Authorization: Bearer jk_…`、Key 复制完整；明文找不到就在后台新建 |
 
-不经客户端直接测 Key 和网络：`./scripts/call.sh tools/list`
+> 0.3.x 及更早版本靠环境变量 `INVEST_JOURNEY_API_KEY` 传 Key；0.4.0 起插件改为浏览器授权，升级后在 `/mcp` 里授权一次即可，原来的 Key 仍可用于手填接入。
+
+不经客户端直接测 Key 和网络（手填 Key 的方式）：`INVEST_JOURNEY_API_KEY=jk_xxx ./scripts/call.sh tools/list`
 
 ## 工具与计量
 
@@ -80,7 +79,7 @@ Cursor / 其他客户端的 `mcp.json`：
 
 ## 计费
 
-按调用扣点（1 点约 ¥0.1），调用失败自动退点；`account_usage` 可随时查余额。新用户开通送 **50 点体验额度**，用完后需开通会员或购买加油包才能继续调用（点数不足时工具会返回剩余点数和充值链接）。没有自动续费，不需要绑卡。
+按调用扣点（1 点约 ¥0.1），调用失败自动退点；`account_usage` 可随时查余额。新用户开通（第一次授权即开通）送 **50 点体验额度**，用完后需开通会员或购买加油包才能继续调用（点数不足时工具会返回剩余点数和充值链接）。没有自动续费，不需要绑卡。
 
 1. **早期用户半价（2026-11-01 起）**：按原价五折，已购会员在有效期内不受后续调价影响。
 2. **正式价**：恢复原价，开始日期另行公布。

@@ -1,6 +1,6 @@
 ---
 name: getting-started
-description: Invest Journey 刚装好、第一次使用，或用户问「这个能干嘛 / 怎么用 / 装好了没 / 还剩多少点」时使用：确认连通、简短介绍能力与余额、给出可以直接试的问法；调用报 Key 相关错误时带用户排查。
+description: Invest Journey 刚装好、第一次使用，或用户问「这个能干嘛 / 怎么用 / 装好了没 / 还剩多少点」时使用：确认连通、简短介绍能力与余额、给出可以直接试的问法；工具不可用、需要授权或调用报 Key 相关错误时带用户排查。
 ---
 
 # 第一次使用 Invest Journey
@@ -21,17 +21,17 @@ description: Invest Journey 刚装好、第一次使用，或用户问「这个�
 
 不要一上来就列出全部工具，也不要主动推销会员。
 
-## 调用报错时
+## 工具不可用 / 调用报错时
 
-按报错原文判断，**把修法告诉用户，不要反复重试**：
+按现象判断，**把修法告诉用户，不要反复重试**：
 
-| 报错里写着 | 让用户做 |
+| 现象 / 报错里写着 | 让用户做 |
 |---|---|
-| 没读到 API Key / 环境变量没有生效 | 在终端运行 `echo $INVEST_JOURNEY_API_KEY`，确认能看到 `jk_` 开头的 Key；没有就 `export INVEST_JOURNEY_API_KEY=jk_你的key` 并写进 `~/.zshrc` 或 `~/.bashrc`，然后**完全退出客户端再打开** |
-| Key 格式不对 / Key 不存在 | 到 https://invest-journey.vercel.app/skills 「我的账户」核对 Key 前缀，复制完整（不带引号空格）；明文找不到就新建一个 |
-| Key 已被吊销 | 到后台新建一个，替换环境变量后重启客户端，余额不受影响 |
-| 工具列表里根本没有 `invest-journey` 的工具 | 说明 MCP 没连上：Claude Code 里输入 `/mcp` 看 `invest-journey` 的状态，按上面第一行排查 |
-| Journey 点数不足 | 停止调用，把报错里的余额、充值链接和价格原样告诉用户；充值到账后直接重试，Key 不用换 |
+| 工具列表里根本没有 `invest-journey` 的工具 | 装完插件要重启 Claude Code；然后输入 `/mcp` 看 `invest-journey` 的状态 |
+| `/mcp` 里显示 needs authentication，或报「缺少 API Key，还没授权」 | 输入 `/mcp`，选中 `invest-journey`，选 Authenticate；浏览器会打开 Invest Journey，登录后点「授权」，回到这里即可（不需要建 Key、不需要环境变量，新用户自动送体验点） |
+| Key 已被吊销 | 浏览器授权接入的：在 `/mcp` 里重新授权；手填 Key 的：到 https://invest-journey.vercel.app/skills 新建一个替换，余额不受影响 |
+| 没读到 API Key / 环境变量没有生效 / Key 格式不对 / Key 不存在（手填 Key 的客户端才会遇到） | 建议改用浏览器授权；坚持手填的，核对请求头 `Authorization: Bearer jk_…`、Key 复制完整，改完重启客户端 |
+| Journey 点数不足 | 停止调用，把报错里的余额、充值链接和价格原样告诉用户；充值到账后直接重试，不用重新授权 |
 | 今日调用已达上限 | 告诉用户北京时间零点重置 |
 
 ## 点数提醒
