@@ -4,7 +4,7 @@
       "type": "http",
       "url": "https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest",
       "headers": {
-        "X-Journey-Client": "plugin/invest-journey@0.4.0"
+        "X-Journey-Client": "plugin/invest-journey@0.5.0"
       }
     }
   }
