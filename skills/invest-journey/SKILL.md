@@ -55,12 +55,22 @@ node <本 Skill 目录>/scripts/ij.mjs login
 
 | 现象 / 输出里写着 | 怎么办 |
 |---|---|
-| 「还没登录」「凭证不可用」「Key 已被吊销」 | 运行 `IJ login`，把打印的链接发给用户，让他登录后点「授权」 |
+| 「还没登录」「凭证不可用」「Key 已被吊销」 | 运行 `IJ login`，把打印的链接发给用户，让用户登录后点「授权」 |
 | 用户在网页上点了取消 / 链接过期 | 重新运行 `IJ login`，会生成新链接 |
-| 「连不上」「fetch failed」 | 网络问题；沙箱环境需要放行 `fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run` |
+| 「连不上」「没有放行」、HTTP 403 / 405、Site Unavailable、fetch failed | 你所在环境的网络把我们的服务拦了（服务本身正常），见下方「网络被拦」，**不要重试、不要自己找别的接口** |
 | MCP 工具显示 needs authentication（插件 / MCP 方式） | Claude Code 里输入 `/mcp`，选中 `invest-journey` → Authenticate，登录后点「授权」；或者改用上面的命令行登录 |
 | Journey 点数不足 | 停止调用，把报错里的余额、充值链接和价格原样告诉用户；充值到账后直接重试，不用重新登录 |
 | 今日调用已达上限 | 告诉用户北京时间零点重置 |
+
+### 网络被拦（沙箱环境常见）
+
+Claude App / 网页版、部分云端或公司内网环境只允许访问白名单里的网站，访问 `fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run` 会被拦下，表现为 403、405、Site Unavailable 或连接失败。这不是 Invest Journey 出了问题，也不是没登录。照下面原样告诉用户，选一种：
+
+1. **放行域名**（Claude App / 网页版）：打开 设置 → 功能（Capabilities），在代码执行的网络访问里选「所有域名」，或把 `fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run` 加进允许列表。改完**新开一个对话**，再说一次「登录 Invest Journey」。
+2. **换本机的 Agent**：在自己电脑终端里用 Claude Code、Codex 或 Cursor，没有这个限制。
+3. 公司网络或其他客户端：请管理员放行上面这个域名。
+
+说完就停，等用户处理好再继续，不要反复运行 login。
 
 工具结果末尾出现「【Journey 提示】」（点数快用完）时，在回答末尾原样转告用户一次，之后不要重复。
 
