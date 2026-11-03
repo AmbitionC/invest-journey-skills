@@ -63,7 +63,16 @@ async function post(url, body, headers = {}) {
     const lines = text.split('\n').filter(l => l.startsWith('data:'));
     if (lines.length) try { json = JSON.parse(lines[lines.length - 1].slice(5)); } catch { /* ignore */ }
   }
+  // 我们的接口只回 JSON / SSE；回来的是别的东西（405、Site Unavailable、拦截页），说明请求被所在环境的网络代理拦了
+  if (!json && r.status >= 400) throw new BlockedError(r.status, text);
   return { status: r.status, json, text };
+}
+
+class BlockedError extends Error {
+  constructor(status, text) {
+    super(`HTTP ${status}${text ? '：' + text.replace(/\s+/g, ' ').slice(0, 80) : ''}`);
+    this.blocked = true;
+  }
 }
 
 function openBrowser(url) {
@@ -234,7 +243,10 @@ async function main() {
 
 main().catch(e => {
   err(`出错了：${e?.message || e}`);
-  if (/fetch failed|ENOTFOUND|ECONN|ETIMEDOUT/i.test(String(e?.message || e) + String(e?.cause?.code || '')))
-    err(`连不上 ${BASE}，检查网络（沙箱环境可能需要放行这个域名）。`);
+  if (e?.blocked || /fetch failed|ENOTFOUND|ECONN|ETIMEDOUT/i.test(String(e?.message || e) + String(e?.cause?.code || ''))) {
+    const host = new URL(BASE).host;
+    err(`连不上 ${NAME} 的服务：当前环境的网络没有放行 ${host}（服务本身是正常的）。`);
+    err(`请告诉用户：在所用客户端的网络设置里允许访问 ${host}（Claude App / 网页版：设置 → 功能 → 代码执行的网络访问，选「所有域名」或把它加进允许列表），改完新开对话再登录；或改用本机终端里的 Agent。`);
+  }
   process.exit(1);
 });
