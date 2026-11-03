@@ -65,7 +65,7 @@ node scripts/ij.mjs login
 |---|---|
 | 提示「还没登录」「凭证不可用」「Key 已被吊销」 | 运行 `node scripts/ij.mjs login`，在打开的页面登录并点「授权」，余额不受影响 |
 | 浏览器没打开（远程机器、沙箱） | 把 login 打印的链接复制到任意设备的浏览器打开，点「授权」即可 |
-| 报「连不上」 | 检查网络；沙箱环境需要放行 `fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run` |
+| 报「连不上」、403 / 405、Site Unavailable（常见于 Claude App / 网页版） | 所在环境的网络没放行我们的服务：Claude App / 网页版在 设置 → 功能 → 代码执行的网络访问 里选「所有域名」或加入 `fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run`，新开对话再登录；或改用本机终端里的 Agent |
 | 插件 / MCP 方式：`/mcp` 里显示 needs authentication | 选中它按提示选 Authenticate，在打开的页面登录并点「授权」 |
 | 手填 Key 的客户端报「没读到 API Key / Key 不存在」 | 确认请求头是 `Authorization: Bearer jk_…`、Key 复制完整；明文找不到就在后台新建 |
 
