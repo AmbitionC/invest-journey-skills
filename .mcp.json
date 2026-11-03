@@ -4,8 +4,7 @@
       "type": "http",
       "url": "https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest",
       "headers": {
-        "Authorization": "Bearer ${INVEST_JOURNEY_API_KEY}",
-        "X-Journey-Client": "plugin/invest-journey@0.3.1"
+        "X-Journey-Client": "plugin/invest-journey@0.4.0"
       }
     }
   }
