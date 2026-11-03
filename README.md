@@ -18,7 +18,7 @@
 
 对你的 Agent（Claude Code、Codex、Cursor、OpenCode 等能运行终端命令的都行）说：
 
-> 帮我安装 Invest Journey Skill：npx skills add AmbitionC/invest-journey-skills -g -y
+> 帮我安装 Invest Journey Skill 并登录：npx skills add AmbitionC/invest-journey-skills -g -y
 
 或者自己在终端运行（需要 Node.js 22 以上）：
 
