@@ -7,6 +7,7 @@
 
 | Skill | 用途 |
 |---|---|
+| `invest-journey` | 入口：登录授权、取数命令、刚装好时的引导与排错 |
 | `market-reading` | 读市场温度，带口径与局限 |
 | `methodology` | 查指标口径，在本地复刻或改造 |
 | `strategy-builder` | 把你的想法写成可检验的规则并用历史数据检验 |
@@ -15,40 +16,38 @@
 
 ## 1. 安装（一句话）
 
-在 Claude Code 里直接说：
+对你的 Agent（Claude Code、Codex、Cursor、OpenCode 等能运行终端命令的都行）说：
 
-> 帮我安装 GitHub 上的 Invest Journey 插件：AmbitionC/invest-journey-skills
+> 帮我安装 Invest Journey Skill：npx skills add AmbitionC/invest-journey-skills -g -y
 
-或者自己在终端运行：
+或者自己在终端运行（需要 Node.js 22 以上）：
 
 ```bash
-claude plugin marketplace add AmbitionC/invest-journey-skills && claude plugin install invest-journey@invest-journey
+npx skills add AmbitionC/invest-journey-skills -g -y
 ```
 
-（在 Claude Code 里也可以输入 `/plugin marketplace add AmbitionC/invest-journey-skills`，再输入 `/plugin install invest-journey@invest-journey`。）
+## 2. 登录：浏览器里点一下「授权」
 
-> 给 Agent 看的安装说明：运行上面那条终端命令即可，不需要 API Key、不需要设置环境变量；装好后提醒用户重启 Claude Code，第一次使用时按下面第 2 步授权。
+装好后 Agent 会运行 Skill 自带的登录命令（也可以自己在 `invest-journey` Skill 目录里运行）：
 
-## 2. 第一次使用：浏览器授权
-
-**不用建 Key，不用写环境变量。** 重启 Claude Code 后输入 `/mcp`，选中 `invest-journey`（显示「needs authentication」），按提示选 **Authenticate**：
-浏览器会打开 Invest Journey，登录（手机号验证码登录会自动注册）后点「授权」，回到 Claude Code 就连上了。新用户授权时自动开通，送 **50 点体验额度**（约够跑通 5~6 次完整场景）。
-
-授权换来的凭证由 Claude Code 自己保存；不想用了，到 https://invest-journey.vercel.app/skills 「我的账户」吊销即可。
-
-### 其他客户端
-
-MCP 地址：`https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest`（Streamable HTTP）
-
-- **只接 MCP 的 Claude Code**：`claude mcp add --transport http --scope user invest-journey https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest`，然后同上 `/mcp` 授权。
-- **Cursor**：`~/.cursor/mcp.json` 里加 `{"mcpServers": {"invest-journey": {"url": "https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest"}}}`，在 MCP 设置页点登录，浏览器里授权。
-- **不支持浏览器授权的客户端（如 Codex）**：到 https://invest-journey.vercel.app/skills 登录后在「我的账户」创建 Key（`jk_` 开头，只显示一次），请求头带上 `Authorization: Bearer jk_你的key`。Codex 的 `~/.codex/config.toml`：
-
-```toml
-[mcp_servers.invest_journey]
-url = "https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest"
-bearer_token_env_var = "INVEST_JOURNEY_API_KEY"
+```bash
+node scripts/ij.mjs login
 ```
+
+浏览器会打开 Invest Journey，登录（手机号验证码登录会自动注册），核对确认码后点「授权」，就好了。
+**不用建 Key、不用写环境变量、不用在客户端里配连接。** 新用户授权时自动开通，送 **50 点体验额度**（约够跑通 5~6 次完整场景）。
+
+凭证保存在本机 `~/.config/invest-journey/credentials.json`。不想用了：`node scripts/ij.mjs logout`，或到 https://invest-journey.vercel.app/skills 「我的账户」吊销。
+
+> 给 Agent 看的说明：安装运行上面那条 `npx skills add` 即可；登录运行 `invest-journey` Skill 里的 `node scripts/ij.mjs login`，把它打印的链接发给用户，等用户点完「授权」。不要让用户复制 Key 给你。
+
+### 其他接入方式（可选）
+
+- **Claude Code 插件**（Skill + MCP 一起装）：`claude plugin marketplace add AmbitionC/invest-journey-skills && claude plugin install invest-journey@invest-journey`，重启后输入 `/mcp` → 选 `invest-journey` → Authenticate，浏览器里点「授权」。
+- **只接 MCP**：地址 `https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest`（Streamable HTTP），支持浏览器授权（OAuth）的客户端填地址即可：
+  - Claude Code：`claude mcp add --transport http --scope user invest-journey https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest`
+  - Cursor：`~/.cursor/mcp.json` 里加 `{"mcpServers": {"invest-journey": {"url": "https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest"}}}`，在 MCP 设置页点登录。
+  - 不支持浏览器授权的客户端：到 https://invest-journey.vercel.app/skills 「我的账户」创建 Key（`jk_` 开头，只显示一次），请求头带 `Authorization: Bearer jk_你的key`。
 
 ## 3. 试一下
 
@@ -58,20 +57,19 @@ bearer_token_env_var = "INVEST_JOURNEY_API_KEY"
 
 > 我想在沪深300 低于长期中枢且恐慌指数 ≥75 时分批买入，帮我写成规则并检验
 
-第一次用可以直接问「这个能干嘛」，Agent 会告诉你余额和几个可以直接试的问法（`getting-started` Skill，查余额不扣点）。装好后回到 https://invest-journey.vercel.app/skills ，页面顶部的进度条会自动检测你的 Agent 有没有连上。
+第一次用可以直接问「这个能干嘛」，Agent 会告诉你余额和几个可以直接试的问法（查余额不扣点）。装好后回到 https://invest-journey.vercel.app/skills ，页面顶部的进度条会自动检测你的 Agent 有没有连上。
 
 ### 连不上怎么办
 
 | 现象 | 处理 |
 |---|---|
-| Claude Code 里没有 invest-journey 的工具 | 装完要重启 Claude Code；再输入 `/mcp` 看 `invest-journey` 的状态 |
-| `/mcp` 里显示 needs authentication | 选中它按提示选 Authenticate，在打开的页面登录并点「授权」 |
-| 授权后又提示需要授权 / 报「Key 已被吊销」 | 在 `/mcp` 里重新授权即可，余额不受影响 |
+| 提示「还没登录」「凭证不可用」「Key 已被吊销」 | 运行 `node scripts/ij.mjs login`，在打开的页面登录并点「授权」，余额不受影响 |
+| 浏览器没打开（远程机器、沙箱） | 把 login 打印的链接复制到任意设备的浏览器打开，点「授权」即可 |
+| 报「连不上」 | 检查网络；沙箱环境需要放行 `fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run` |
+| 插件 / MCP 方式：`/mcp` 里显示 needs authentication | 选中它按提示选 Authenticate，在打开的页面登录并点「授权」 |
 | 手填 Key 的客户端报「没读到 API Key / Key 不存在」 | 确认请求头是 `Authorization: Bearer jk_…`、Key 复制完整；明文找不到就在后台新建 |
 
-> 0.3.x 及更早版本靠环境变量 `INVEST_JOURNEY_API_KEY` 传 Key；0.4.0 起插件改为浏览器授权，升级后在 `/mcp` 里授权一次即可，原来的 Key 仍可用于手填接入。
-
-不经客户端直接测 Key 和网络（手填 Key 的方式）：`INVEST_JOURNEY_API_KEY=jk_xxx ./scripts/call.sh tools/list`
+> 版本说明：0.5.0 起默认用 `npx skills add` 安装、Skill 自带命令行登录；0.4.0 的插件 / MCP 浏览器授权继续可用；0.3.x 及更早靠环境变量 `INVEST_JOURNEY_API_KEY` 传 Key，原来的 Key 仍可用于手填接入。
 
 ## 工具与计量
 
