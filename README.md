@@ -91,7 +91,7 @@ node scripts/ij.mjs login
 
 加油包（不过期）：100 点 ¥5（原价 ¥10）· 500 点 ¥22.5（原价 ¥45）· 1100 点 ¥44（原价 ¥88）。
 
-每次调用的点数：口径类工具（`indicator_list`、`methodology_get`、`account_usage`）不扣点；`market_snapshot` 每次 5 点；`fear_series`、`bias_series` 每次 10 点；`macro_series` 每次 5 点。**历史序列（`fear_series`、`bias_series`、`macro_series`）同一天只扣一次**：分段取全历史、换参数重取都不再扣点。完整价目以 https://invest-journey.vercel.app/skills 为准。
+每次调用的点数：口径类工具（`indicator_list`、`methodology_get`、`account_usage`）不扣点；`market_snapshot` 每次 5 点；`fear_series`、`bias_series` 每次 10 点；`macro_series`、`market_sentiment`、`sector_rank`、`sector_history`、`index_history` 每次 5 点；`rule_backtest` 免费。**历史序列（`fear_series`、`bias_series`、`macro_series`、`market_sentiment`、`sector_history`、`index_history`）同一天只扣一次**：分段取全历史、换参数重取都不再扣点。完整价目以 https://invest-journey.vercel.app/skills 为准。
 
 ## 声明
 
