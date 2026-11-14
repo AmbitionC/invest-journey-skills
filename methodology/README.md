@@ -5,5 +5,6 @@
 - [A 股恐慌指数（0-100）](fear-index.md)（`methodology_get(topic="fear_index")`）
 - [宽基指数长期中枢（全历史中位线）](median-anchor.md)（`methodology_get(topic="median_anchor")`）
 - [60 日乖离率与近十年排名](bias-rank.md)（`methodology_get(topic="bias_rank")`）
+- [常见指数统一读数（位置 / 偏离度 / 名次）](index-metrics.md)（`methodology_get(topic="index_metrics")`）
 - [中证红利股息率（TTM）与历史分位](dividend-yield.md)（`methodology_get(topic="dividend_yield")`）
 - [宏观数据层](macro-series.md)（`methodology_get(topic="macro_series")`）
