@@ -15,6 +15,7 @@ description: 读 A 股市场温度：恐慌指数、宽基指数相对长期中�
    - 七个指数的 60 日乖离率与近十年排名
    - 中证红利股息率与分位（注意 `percentile_since`，窗口不是十年）
 2. 需要趋势时补历史：`fear_series`（默认近一年）、`bias_series`、`macro_series`、`index_history`。
+   问宽基以外的指数（策略风格、行业主题如白酒/半导体/证券、港股海外）用 `index_metrics`：一次给出 41 个指数的长期中枢位置、近5年中位线、偏离度名次；这些读数除四个跟车指数外都没经过回测，只能当刻度讲。
    问短线情绪看 `market_sentiment`（涨跌停、封板率、连板高度）；问板块轮动看 `sector_rank`，再用 `sector_history` 看单个板块。
 3. 解释任何数字之前，先用 `methodology_get` 确认口径，把**局限**一并告诉用户。
 
