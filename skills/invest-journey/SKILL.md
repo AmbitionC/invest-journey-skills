@@ -74,4 +74,4 @@ Claude App / 网页版、部分云端或公司内网环境只允许访问白名�
 
 工具结果末尾出现「【Journey 提示】」（点数快用完）时，在回答末尾原样转告用户一次，之后不要重复。
 
-不想用了：`IJ logout` 删除本机凭证；到 https://invest-journey.vercel.app/skills 「我的账户」可吊销。
+不想用了：`IJ logout` 删除本机凭证；到 https://invest-journey.cn/skills 「我的账户」可吊销。
