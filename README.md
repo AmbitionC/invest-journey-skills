@@ -37,7 +37,7 @@ node scripts/ij.mjs login
 浏览器会打开 Invest Journey，登录（手机号验证码登录会自动注册），核对确认码后点「授权」，就好了。
 **不用建 Key、不用写环境变量、不用在客户端里配连接。** 新用户授权时自动开通，送 **100 点体验额度**，14 天内有效（约够跑一次完整回测，再每天看一眼市场）。
 
-凭证保存在本机 `~/.config/invest-journey/credentials.json`。不想用了：`node scripts/ij.mjs logout`，或到 https://invest-journey.vercel.app/skills 「我的账户」吊销。
+凭证保存在本机 `~/.config/invest-journey/credentials.json`。不想用了：`node scripts/ij.mjs logout`，或到 https://invest-journey.cn/skills 「我的账户」吊销。
 
 > 给 Agent 看的说明：安装运行上面那条 `npx skills add` 即可；登录运行 `invest-journey` Skill 里的 `node scripts/ij.mjs login`，把它打印的链接发给用户，等用户点完「授权」。不要让用户复制 Key 给你。
 
@@ -47,7 +47,7 @@ node scripts/ij.mjs login
 - **只接 MCP**：地址 `https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest`（Streamable HTTP），支持浏览器授权（OAuth）的客户端填地址即可：
   - Claude Code：`claude mcp add --transport http --scope user invest-journey https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest`
   - Cursor：`~/.cursor/mcp.json` 里加 `{"mcpServers": {"invest-journey": {"url": "https://fe-journey-main-ktantdfjcs.cn-hangzhou.fcapp.run/mcp/invest"}}}`，在 MCP 设置页点登录。
-  - 不支持浏览器授权的客户端：到 https://invest-journey.vercel.app/skills 「我的账户」创建 Key（`jk_` 开头，只显示一次），请求头带 `Authorization: Bearer jk_你的key`。
+  - 不支持浏览器授权的客户端：到 https://invest-journey.cn/skills 「我的账户」创建 Key（`jk_` 开头，只显示一次），请求头带 `Authorization: Bearer jk_你的key`。
 
 ## 3. 试一下
 
@@ -57,7 +57,7 @@ node scripts/ij.mjs login
 
 > 我想在沪深300 低于长期中枢且恐慌指数 ≥75 时分批买入，帮我写成规则并检验
 
-第一次用可以直接问「这个能干嘛」，Agent 会告诉你余额和几个可以直接试的问法（查余额不扣点）。装好后回到 https://invest-journey.vercel.app/skills ，页面顶部的进度条会自动检测你的 Agent 有没有连上。
+第一次用可以直接问「这个能干嘛」，Agent 会告诉你余额和几个可以直接试的问法（查余额不扣点）。装好后回到 https://invest-journey.cn/skills ，页面顶部的进度条会自动检测你的 Agent 有没有连上。
 
 ### 连不上怎么办
 
@@ -91,7 +91,7 @@ node scripts/ij.mjs login
 
 加油包（不过期）：100 点 ¥5（原价 ¥10）· 500 点 ¥22.5（原价 ¥45）· 1100 点 ¥44（原价 ¥88）。
 
-每次调用的点数：口径类工具（`indicator_list`、`methodology_get`、`account_usage`）不扣点；`market_snapshot` 每次 5 点；`fear_series`、`bias_series` 每次 10 点；`macro_series`、`market_sentiment`、`sector_rank`、`sector_history`、`index_history`、`index_metrics` 每次 5 点；`rule_backtest` 免费。**历史序列（`fear_series`、`bias_series`、`macro_series`、`market_sentiment`、`sector_history`、`index_history`、`index_metrics`）同一天只扣一次**：分段取全历史、换参数重取都不再扣点。完整价目以 https://invest-journey.vercel.app/skills 为准。
+每次调用的点数：口径类工具（`indicator_list`、`methodology_get`、`account_usage`）不扣点；`market_snapshot` 每次 5 点；`fear_series`、`bias_series` 每次 10 点；`macro_series`、`market_sentiment`、`sector_rank`、`sector_history`、`index_history`、`index_metrics` 每次 5 点；`rule_backtest` 免费。**历史序列（`fear_series`、`bias_series`、`macro_series`、`market_sentiment`、`sector_history`、`index_history`、`index_metrics`）同一天只扣一次**：分段取全历史、换参数重取都不再扣点。完整价目以 https://invest-journey.cn/skills 为准。
 
 ## 声明
 
